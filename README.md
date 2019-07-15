@@ -5,7 +5,7 @@ This code is too simple :) but work enough for me
 
 I just try to make first work in github
 
-    This code has 3 simple function for read,write and plot V1 file
+    This code has 3 simple function for read,write and plot V1-file in v1.py
     (file.V1 is strong motion or acceleration data of earthquake)
     
         1)read_v1
