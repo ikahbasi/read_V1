@@ -24,11 +24,11 @@ I just try to make first work in github
             # data = [[comp1, time1, acc1],[comp2, time2, acc2],[comp3, time3, acc3]]
         
         2)v1_write_2column_file
-            >>> v1_write_2column_file(asciis)
-            # write 3 files with name of component in current directory 
+            >>> v1_write_2column_file(data)
+            # write 3 files with name of 'name_input_file+component' in current directory 
     
         3)plot_v1
-            >>> plot_v1(asciis)
+            >>> plot_v1(data)
             # save image 'output.png' in current directory
             
         Please send me any file.V1 that makes error to improve improve efficiency.
