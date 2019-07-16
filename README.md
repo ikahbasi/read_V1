@@ -11,14 +11,17 @@ I just try to make first work in github
         1)read_v1
             >>> path = 'path-of-file/namefile'
             
-            # obspy_out: defult to False
-            >>> asciis = read_v1(path)
+            # then
+            >>> st = read_v1(path,method = 'obspystream') # if you have obspy modul
+            # or
+            >>> data = read_v1(path,method = 'ascii')
+            # or
+            >>> data,st = read_v1(path,method = 'both') # if you have obspy modul
+
+           
             
-            # if you have obspy python package you can
-            >>> asciis, st = read_v1(path, obspy_out=True)
-            
-            # asciis has all 3 component
-            # asciis = [[comp1, time1, acc1],[comp2, time2, acc2],[comp3, time3, acc3]]
+            # data has all 3 component
+            # data = [[comp1, time1, acc1],[comp2, time2, acc2],[comp3, time3, acc3]]
         
         2)v1_write_2column_file
             >>> v1_write_2column_file(asciis)
