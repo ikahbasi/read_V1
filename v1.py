@@ -19,17 +19,20 @@ def helpme():
         1)read_v1
             >>> path = 'path-of-file/namefile'
             
-            # obspy_out: defult to False
-            >>> asciis = read_v1(path)
+            # then
+            >>> st = read_v1(path,method = 'obspystream')
+            # or
+            >>> data = read_v1(path,method = 'ascii')
+            # or
+            >>> data,st = read_v1(path,method = 'both')
+
+           
             
-            # if you have obspy python package you can
-            >>> asciis, st = read_v1(path, obspy_out=True)
-            
-            # asciis has all 3 component
-            # asciis = [[comp1, time1, acc1],[comp2, time2, acc2],[comp3, time3, acc3]]
+            # data has all 3 component
+            # data = [[comp1, time1, acc1],[comp2, time2, acc2],[comp3, time3, acc3]]
         
         2)v1_write_2column_file
-            >>> v1_write_2column_file(asciis)
+            >>> v1_write_2column_file(data)
             # write 3 files with name of component in current directory 
     
         3)plot_v1
@@ -39,7 +42,7 @@ def helpme():
         send me any file.V1 that makes error
             '''
             )
-def _read_component(iput,obspy_out):
+def _read_component(iput,method):
     acc=[]
     for ii in range(0,6):
         line = iput.readline().split()
@@ -75,31 +78,46 @@ def _read_component(iput,obspy_out):
             
     duration = dt * len(acc)
     time = list(np.arange(0,duration,dt))
-    if obspy_out:
+    if method == 'obspystream' or method == 'both':
         from obspy.core.trace import Trace
         trace = Trace(data=np.array(acc))
         trace.stats.sampling_rate = 1/dt
         trace.stats.channel = comp
         if 'station' in locals():
             trace.stats.station = station
-            
+    if method == 'obspystream': 
+        return trace
+    if method == 'ascii':
+        return [comp, time, acc]
+    if method == 'both':
         return [comp, time, acc],trace
-    return [comp, time, acc],None
+        
 
-def read_v1(path_of_file,obspy_out = False):
+def read_v1(path_of_file,method = 'ascii'):
     File = open(path_of_file)
-    if obspy_out:
+    if method == 'obspystream':
         from obspy.core.stream import Stream
         st = Stream()
-    else:
-        st = None
-    asciis = []
-    for ii in [1,2,3]:
-        asci,tr = _read_component(File,obspy_out)
-        asciis += [asci]
-        if obspy_out:
+        for ii in [1,2,3]:
+            tr = _read_component(File,method)
             st += tr
-    return asciis,st
+        return st
+            
+    if method == 'ascii':
+        asciis = []
+        for ii in [1,2,3]:
+            asciis.append(_read_component(File,method))
+        return asciis
+    
+    if method == 'both': 
+        asciis = []
+        from obspy.core.stream import Stream
+        st = Stream()
+        for ii in [1,2,3]:
+            asci,tr = _read_component(File,method)
+            asciis.append(asci)
+            st += tr
+        return asciis,st
 
 def v1_write_2column_file(asciis):
     for tr in asciis:
