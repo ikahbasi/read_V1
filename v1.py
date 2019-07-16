@@ -9,8 +9,8 @@ Created on Mon Jul 15 17:45:22 2019
 import matplotlib.pyplot as plt
 import numpy as np
 
-print('enter command "helpme()" if you need it')
-def helpme():
+print('enter command "help2me()" if you need it')
+def help2me():
     print(
             '''
     this code has 3 simple function for read V1 file
@@ -33,7 +33,7 @@ def helpme():
         
         2)v1_write_2column_file
             >>> v1_write_2column_file(data)
-            # write 3 files with name of component in current directory 
+            # write 3 files with name of "input_file_name+component" in current directory 
     
         3)plot_v1
             >>> plot_v1(asciis)
