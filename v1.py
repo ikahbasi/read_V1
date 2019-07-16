@@ -94,6 +94,8 @@ def _read_component(iput,method):
         
 
 def read_v1(path_of_file,method = 'ascii'):
+    global name2save
+    name2save = path_of_file.split('.')[-2]
     File = open(path_of_file)
     if method == 'obspystream':
         from obspy.core.stream import Stream
@@ -123,8 +125,8 @@ def v1_write_2column_file(asciis):
     for tr in asciis:
         amp = tr[2]
         time = tr[1]
-        name = tr[0]
-        file = open(name,'w')
+        comp = tr[0]
+        file = open(name2save+comp+'.txt','w')
         for ii in range(len(amp)):
             file.write(str(time[ii])+'\t\t'+str(amp[ii])+'\n')
         file.close()
