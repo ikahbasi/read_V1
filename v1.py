@@ -162,8 +162,7 @@ def plot_v1(asciis):
     plt.tick_params(labelsize=fontsize)
     
     f.savefig(name_file+'.png',fontsize=fontsize,fontweight='black',dpi=120)
-
-#a1=x b1=y a2=newx b2=newy
+    
 from math import cos,sin
 from numpy import matmul
 def rotate_xy(x, y, theta):
